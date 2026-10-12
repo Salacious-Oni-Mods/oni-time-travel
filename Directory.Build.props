@@ -1,0 +1,60 @@
+<Project>
+  <!-- Build settings for the mod in mod/. -->
+  <PropertyGroup>
+    <!-- The game ships Harmony 2 built for .NET 4.8, so mods target net48. -->
+    <TargetFramework>net48</TargetFramework>
+    <LangVersion>latest</LangVersion>
+    <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
+    <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+    <EnableDefaultCompileItems>false</EnableDefaultCompileItems>
+    <DebugType>none</DebugType>
+    <Deterministic>true</Deterministic>
+    <CopyLocalLockFileAssemblies>false</CopyLocalLockFileAssemblies>
+    <NoWarn>$(NoWarn);CS1701;CS1702;MSB3277</NoWarn>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <!-- The game's managed assemblies are referenced from your own install and never copied
+         into this repository. Set ONI_GAME to the game's folder, the one that contains
+         OxygenNotIncluded_Data. -->
+    <ModLibDir>$(ONI_GAME)/OxygenNotIncluded_Data/Managed/</ModLibDir>
+    <!-- The framework is built from a checkout of oni-framework-api beside this one. -->
+    <OniFrameworkDir>$(MSBuildThisFileDirectory)../oni-framework-api/</OniFrameworkDir>
+  </PropertyGroup>
+  <ItemGroup>
+    <PackageReference Include="Microsoft.NETFramework.ReferenceAssemblies" Version="1.0.3" PrivateAssets="all" />
+  </ItemGroup>
+  <!-- Game and Unity assemblies: reference only, never redistributed. -->
+  <ItemGroup>
+    <Reference Include="0Harmony"><HintPath>$(ModLibDir)0Harmony.dll</HintPath></Reference>
+    <Reference Include="Assembly-CSharp"><HintPath>$(ModLibDir)Assembly-CSharp.dll</HintPath></Reference>
+    <Reference Include="Assembly-CSharp-firstpass"><HintPath>$(ModLibDir)Assembly-CSharp-firstpass.dll</HintPath></Reference>
+    <Reference Include="UnityEngine"><HintPath>$(ModLibDir)UnityEngine.dll</HintPath></Reference>
+    <Reference Include="UnityEngine.CoreModule"><HintPath>$(ModLibDir)UnityEngine.CoreModule.dll</HintPath></Reference>
+    <Reference Include="UnityEngine.InputLegacyModule"><HintPath>$(ModLibDir)UnityEngine.InputLegacyModule.dll</HintPath></Reference>
+    <Reference Include="UnityEngine.IMGUIModule"><HintPath>$(ModLibDir)UnityEngine.IMGUIModule.dll</HintPath></Reference>
+    <Reference Include="UnityEngine.ScreenCaptureModule"><HintPath>$(ModLibDir)UnityEngine.ScreenCaptureModule.dll</HintPath></Reference>
+    <Reference Include="UnityEngine.ImageConversionModule"><HintPath>$(ModLibDir)UnityEngine.ImageConversionModule.dll</HintPath></Reference>
+    <Reference Include="UnityEngine.AssetBundleModule"><HintPath>$(ModLibDir)UnityEngine.AssetBundleModule.dll</HintPath></Reference>
+    <Reference Include="UnityEngine.TextRenderingModule"><HintPath>$(ModLibDir)UnityEngine.TextRenderingModule.dll</HintPath></Reference>
+    <Reference Include="UnityEngine.UI"><HintPath>$(ModLibDir)UnityEngine.UI.dll</HintPath></Reference>
+    <Reference Include="UnityEngine.UIModule"><HintPath>$(ModLibDir)UnityEngine.UIModule.dll</HintPath></Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Update="0Harmony;Assembly-CSharp;Assembly-CSharp-firstpass;UnityEngine;UnityEngine.CoreModule;UnityEngine.InputLegacyModule;UnityEngine.IMGUIModule;UnityEngine.ScreenCaptureModule;UnityEngine.ImageConversionModule;UnityEngine.AssetBundleModule;UnityEngine.TextRenderingModule;UnityEngine.UI;UnityEngine.UIModule">
+      <Private>false</Private>
+    </Reference>
+  </ItemGroup>
+  <!-- OniFramework.Library, the part of the API that does not need the SDK simulation library.
+       A direct reference with Private=false keeps the library out of each mod's own folder (it
+       ships as its own mod, and Mono loads one assembly per name). -->
+  <ItemGroup>
+    <ProjectReference Include="$(OniFrameworkDir)OniFramework.Library/OniFramework.Library.csproj">
+      <Private>false</Private>
+    </ProjectReference>
+  </ItemGroup>
+  <!-- Without this, a missing game path surfaces only as CS0246 errors naming Unity types. -->
+  <Target Name="VerifyGameAssemblies" BeforeTargets="ResolveAssemblyReferences">
+    <Error Condition="!Exists('$(ModLibDir)Assembly-CSharp.dll')"
+           Text="Game assemblies not found in $(ModLibDir). Set ONI_GAME to the game's install folder (the one containing OxygenNotIncluded_Data) and build again." />
+  </Target>
+
+</Project>

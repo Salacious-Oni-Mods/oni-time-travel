@@ -1,0 +1,49 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <RootNamespace>FxSandbox</RootNamespace>
+    <AssemblyName>FxSandbox</AssemblyName>
+    <Version>0.7.0</Version>
+  </PropertyGroup>
+  <ItemGroup>
+    <!-- Explicit list, not globbing (EnableDefaultCompileItems is false in
+         Directory.Build.props). A new .cs file silently does not build until it is added here. -->
+    <Compile Include="Mod.cs" />
+    <Compile Include="WarpEmitter.cs" />
+    <Compile Include="WarpPass.cs" />
+    <Compile Include="WormholePass.cs" />
+    <Compile Include="TimeMachine.cs" />
+    <Compile Include="BoltRecolour.cs" />
+    <Compile Include="TimeTwin.cs" />
+    <None Include="mod.yaml" CopyToOutputDirectory="PreserveNewest" />
+    <None Include="mod_info.yaml" CopyToOutputDirectory="PreserveNewest" />
+    <None Include="blueprints\**\*.yaml" CopyToOutputDirectory="PreserveNewest" />
+    <None Include="worldgen\**\*.yaml" CopyToOutputDirectory="PreserveNewest" />
+    <None Include="templates\**\*.yaml" CopyToOutputDirectory="PreserveNewest" />
+    <!-- kanim assets: KMod.Mod.LoadAnimation registers each anim/*/<Name>/ as "<Name>_kanim",
+         so the directory structure has to survive into the output (see mod1's csproj). -->
+    <None Include="anim\**\*" CopyToOutputDirectory="PreserveNewest">
+      <Link>anim\%(RecursiveDir)%(Filename)%(Extension)</Link>
+    </None>
+  </ItemGroup>
+  <!-- The dev rigs (FXPROBE, FXWARP, FXLOOK, FXTIME, FXSEAT, TTPREHIST) are built only with
+       -p:FxDevRigs=true -p:OniFrameworkProject=path/to/OniFramework.csproj. They derive from the
+       framework's RigHarness, which is in OniFramework, not in OniFramework.Library, so the
+       default build is the playable mod alone and needs only the library (referenced from
+       Directory.Build.props with Private=false). Private=false here too: OniFramework ships as
+       its own mod. -->
+  <PropertyGroup Condition="'$(FxDevRigs)' == 'true'">
+    <DefineConstants>$(DefineConstants);FX_DEV_RIGS</DefineConstants>
+  </PropertyGroup>
+  <ItemGroup Condition="'$(FxDevRigs)' == 'true'">
+    <Compile Include="Patches.cs" />
+    <Compile Include="FxProbeRig.cs" />
+    <Compile Include="FxWarpRig.cs" />
+    <Compile Include="FxLookRig.cs" />
+    <Compile Include="FxTimeRig.cs" />
+    <Compile Include="FxTtPrehistRig.cs" />
+    <Compile Include="FxSeatRig.cs" />
+    <ProjectReference Include="$(OniFrameworkProject)">
+      <Private>false</Private>
+    </ProjectReference>
+  </ItemGroup>
+</Project>

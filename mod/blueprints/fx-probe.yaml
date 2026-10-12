@@ -1,0 +1,25 @@
+# The world FxProbeRig runs in (--fx-probe).
+#
+# AN EMPTY CANVAS, ON PURPOSE. The probe checks the plumbing of OniFramework.ScreenEffects with an
+# identity pass (Klei's own PostFX/Desaturate, which compiles to a pure copy), so the picture must
+# hold still between two captures: a vacuum box has nothing in it that moves. Copied from
+# mod2-matter-environment/blueprints/material-report.yaml, as that file asks.
+#
+# The probe also SAVES this canvas and loads the save back, to see the pass re-bind to the new
+# CameraController (hazard H2, oni/docs/spacetime-warp-effect.md §1.4). That is why the rig is
+# armed with canvasSaves: true in Mod.cs.
+
+name: FxProbe
+
+canvas:
+  width: 24
+  height: 16
+  background: Vacuum
+  backgroundTemperature: 293.15
+  border: Unobtanium
+  borderThickness: 1
+  # A canvas gets no biome for free. Nothing here reads the zone, but leaving it Space would make
+  # Grid.IsCellOpenToSpace true everywhere.
+  zone: Sandstone
+  startX: 12
+  startY: 8

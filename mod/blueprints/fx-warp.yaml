@@ -1,0 +1,201 @@
+# The world FxWarpRig measures the spacetime-warp screen pass in (--fx-warp).
+#
+# WHY THIS FILE EXISTS. A lens is only visible against straight lines, so the canvas is made of
+# them: Sandstone stripes every 4 cells on Obsidian, two Granite pillars and a row of tiles, around an
+# open hall of Oxygen. The emitter stands on the hall floor at (23, 6); the warp centre is 8 cells
+# above it, at world (23.5, 14.5) in canvas terms, with a 9-cell radius that reaches both pillars,
+# the tile row and the stripes beyond the hall walls. Nothing here is simulated against: no energy
+# or mass claim, so no jacket.
+name: FxWarp
+
+canvas:
+  width: 48
+  height: 32
+  background: Vacuum
+  backgroundTemperature: 300.0
+  border: Unobtanium
+  borderThickness: 1
+  zone: Sandstone
+  startX: 24
+  startY: 10
+
+regions:
+  - name: block          # everything inside the border, solid Obsidian
+    x: 1
+    y: 1
+    w: 46
+    h: 30
+  - name: stripe03
+    x: 3
+    y: 1
+    w: 2
+    h: 30
+  - name: stripe07
+    x: 7
+    y: 1
+    w: 2
+    h: 30
+  - name: stripe11
+    x: 11
+    y: 1
+    w: 2
+    h: 30
+  - name: stripe15
+    x: 15
+    y: 1
+    w: 2
+    h: 30
+  - name: stripe19
+    x: 19
+    y: 1
+    w: 2
+    h: 30
+  - name: stripe23
+    x: 23
+    y: 1
+    w: 2
+    h: 30
+  - name: stripe27
+    x: 27
+    y: 1
+    w: 2
+    h: 30
+  - name: stripe31
+    x: 31
+    y: 1
+    w: 2
+    h: 30
+  - name: stripe35
+    x: 35
+    y: 1
+    w: 2
+    h: 30
+  - name: stripe39
+    x: 39
+    y: 1
+    w: 2
+    h: 30
+  - name: stripe43
+    x: 43
+    y: 1
+    w: 2
+    h: 30
+  - name: hall           # the open room the warp sits in
+    x: 12
+    y: 6
+    w: 24
+    h: 18
+  - name: pillarWest
+    x: 17
+    y: 6
+    w: 1
+    h: 18
+  - name: pillarEast
+    x: 30
+    y: 6
+    w: 1
+    h: 18
+
+fills:
+  - region: block
+    element: Obsidian
+    mass: 1840.0
+    temperature: 300.0
+  - region: stripe03
+    element: SandStone
+    mass: 1840.0
+    temperature: 300.0
+  - region: stripe07
+    element: SandStone
+    mass: 1840.0
+    temperature: 300.0
+  - region: stripe11
+    element: SandStone
+    mass: 1840.0
+    temperature: 300.0
+  - region: stripe15
+    element: SandStone
+    mass: 1840.0
+    temperature: 300.0
+  - region: stripe19
+    element: SandStone
+    mass: 1840.0
+    temperature: 300.0
+  - region: stripe23
+    element: SandStone
+    mass: 1840.0
+    temperature: 300.0
+  - region: stripe27
+    element: SandStone
+    mass: 1840.0
+    temperature: 300.0
+  - region: stripe31
+    element: SandStone
+    mass: 1840.0
+    temperature: 300.0
+  - region: stripe35
+    element: SandStone
+    mass: 1840.0
+    temperature: 300.0
+  - region: stripe39
+    element: SandStone
+    mass: 1840.0
+    temperature: 300.0
+  - region: stripe43
+    element: SandStone
+    mass: 1840.0
+    temperature: 300.0
+  - region: hall
+    element: Oxygen
+    mass: 1.2
+    temperature: 300.0
+  - region: pillarWest
+    element: Granite
+    mass: 1840.0
+    temperature: 300.0
+  - region: pillarEast
+    element: Granite
+    mass: 1840.0
+    temperature: 300.0
+
+buildings:
+  - id: FxWarpEmitter      # dev-only, 1x1; the warp centre is CentreOffset (0.5, 8) above it
+    x: 23
+    y: 6
+    temperature: 300.0
+  - id: Tile               # a straight line through the lens, y 18, x 18..29
+    x: 18
+    y: 18
+  - id: Tile
+    x: 19
+    y: 18
+  - id: Tile
+    x: 20
+    y: 18
+  - id: Tile
+    x: 21
+    y: 18
+  - id: Tile
+    x: 22
+    y: 18
+  - id: Tile
+    x: 23
+    y: 18
+  - id: Tile
+    x: 24
+    y: 18
+  - id: Tile
+    x: 25
+    y: 18
+  - id: Tile
+    x: 26
+    y: 18
+  - id: Tile
+    x: 27
+    y: 18
+  - id: Tile
+    x: 28
+    y: 18
+  - id: Tile
+    x: 29
+    y: 18

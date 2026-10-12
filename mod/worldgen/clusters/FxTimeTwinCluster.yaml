@@ -1,0 +1,40 @@
+# The time-travel proof of concept (fx/TIME-TRAVEL-POC-SCOPE.md): home Terra and its prehistoric
+# twin, generated together when the game is created. The game cannot add an asteroid later: its
+# only mid-game world maker (ClusterManager.CreateRocketInteriorWorld) needs a free block of a grid
+# that worldgen has already sized.
+#
+# Seen only through FxSandbox's TIME TRAVEL card, which is registered only under --fx-ttprehist:
+# clusterCategory 101 is listed by that card and nothing else (PlaystyleRegistry; Mod 3's Mars is
+# 100).
+#
+# The two worlds are the same file apart from the header lines (worldgen/make-twin.py), and
+# TimeTwin.SeedPatch gives the twin home's seeds instead of Klei's seed+1, so worldgen draws the
+# same shape twice. TimeTwin.Convert then makes the twin prehistoric before its settle.
+#
+# PrehistoricCluster keeps DLC4's own biome mixing off both worlds (its forbiddenClusterTags).
+# Story traits are off because one is placed on one world only, which would make the shapes differ.
+name: STRINGS.CLUSTER_NAMES.FXTIMETWIN.NAME
+description: STRINGS.CLUSTER_NAMES.FXTIMETWIN.DESCRIPTION
+requiredDlcIds: [EXPANSION1_ID, DLC4_ID]
+coordinatePrefix: FX-TIME
+menuOrder: 0
+clusterCategory: 101
+clusterTags: [PrehistoricCluster]
+disableStoryTraits: true
+
+startWorldIndex: 0
+numRings: 12
+worldPlacements:
+- world: worlds/FxTimeTerra
+  buffer: 2
+  locationType: StartWorld
+  allowedRings:
+    min: 0
+    max: 0
+# Far out on the starmap. Nothing in the PoC stops a rocket going there (scope O2).
+- world: worlds/FxTimeTwinTerra
+  buffer: 2
+  locationType: InnerCluster
+  allowedRings:
+    min: 10
+    max: 11

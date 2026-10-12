@@ -1,0 +1,15 @@
+# The twin's starting "base": sandstoneBase's bounds (Klei templates/bases/sandstoneBase.yaml,
+# info.size 18x7, info.min -8,-2) and nothing else. Worldgen reserves the start template's area
+# before every other template, so the twin reserves the same area and its later templates land
+# where home's do. It has no cells and no buildings: no carved room and no second printing pod.
+# info.min is non-zero, so TemplateContainer.GetTemplateBounds reads this info as written.
+name: pastBase
+info:
+  size:
+    X: 18
+    Y: 7
+  min:
+    X: -8
+    Y: -2
+  area: 0
+cells: []
